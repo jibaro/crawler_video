@@ -23,8 +23,7 @@ public class PornHub implements PageProcessor {
             String downlaodUrl=embadPage.regex("src\\t\\t\\:\\s\\'(.*)\\'\\,[\\s\\S]*?poster").toString();
             page.putField(videoName,new Request(downlaodUrl).putExtra("videoName",videoName));
         }else {
-            String videoName=page.getHtml().xpath("//title/text()").toString();
-            page.addTargetRequest(new Request(page.getUrl().toString().replaceAll("view_video\\.php\\?viewkey=", "embed/")).putExtra("videoName",videoName));
+            page.addTargetRequest(page.getUrl().toString().replaceAll("view_video\\.php\\?viewkey=", "embed/"));
         }
 
     }

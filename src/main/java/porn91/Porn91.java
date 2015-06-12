@@ -1,6 +1,7 @@
 package porn91;
 
 import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
@@ -46,14 +47,18 @@ public class Porn91 implements PageProcessor {
             seccode=currentHtml.regex("\\w*seccode\\',\\'(\\w*)\'").toString();
             max_vid=currentHtml.regex("\\w*max_vid\',\'(\\d*)\'").toString();
             if(!VID.equals("")){
-                page.putField(name,VID);
-                page.addTargetRequest("http://91porn.com/getfile.php?VID="+VID+"&seccode="+seccode+"&max_vid="+max_vid+other);
-            }else{
-                log.info("没有获取到视频ID"+page.getUrl());
+                String linnk="http://91porn.com/getfile.php?VID="+VID+"&seccode="+seccode+"&max_vid="+max_vid+other;
+//                page.putField(name, new Request(linnk).putExtra("videoName",name));
+                page.addTargetRequest(new Request(linnk).putExtra("videoName",name));
+            } else {
+                log.info("没有获取到视频ID" + page.getUrl());
             }
         }
         if (page.getUrl().regex(downloadUrl).match()){
-            page.putField(page.getUrl().regex("\\w*VID=(\\d*)").toString(),page.getHtml().xpath("//body/text()").toString().split("&")[0].split("=")[1]);
+            String videoName=page.getRequest().getExtra("videoName").toString();
+            String link=page.getHtml().xpath("//body/text()").toString().split("&")[0].split("=")[1];
+            page.putField(videoName,
+                    new Request(link).putExtra("videoName", videoName));
         }
     }
 

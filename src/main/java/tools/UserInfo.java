@@ -16,8 +16,8 @@ public class UserInfo {
 
     public static List<String> getUserInfo() {
         try {
-            path = "E:/info.txt";
-//            path = getFilePath() + "info.txt";
+//            path = "E:/info.txt";
+            path = getFilePath() + "info.txt";
             info = new ArrayList<String>();
             in = new FileReader(path);
             br = new BufferedReader(in);
@@ -40,8 +40,8 @@ public class UserInfo {
         int firstIndex = path.lastIndexOf(System.getProperty("path.separator")) + 1;
         int lastIndex = path.lastIndexOf(File.separator) + 1;
         path = path.substring(firstIndex, lastIndex);
-        return "E://";
-//        return path;
+//        return "E://";
+        return path;
     }
 
     public static List<String> Urls() {

@@ -2,6 +2,9 @@
   <artifact type="jar" build-on-make="true" name="crawler:jar">
     <output-path>E:/</output-path>
     <root id="archive" name="crawler.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="crawler" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/assertj/assertj-core/1.5.0/assertj-core-1.5.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-log4j12/1.7.6/slf4j-log4j12-1.7.6.jar" path-in-jar="/" />

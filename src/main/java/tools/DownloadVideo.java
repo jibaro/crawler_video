@@ -30,13 +30,13 @@ public class DownloadVideo extends FilePersistentBase implements Pipeline {
 
     public void process(ResultItems resultItems, Task task) {
         Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-
+            logger.info(resultItems.getRequest().toString());
         if (!resultItems.getRequest().toString().contains("videoName")) {
             logger.info("jump not videoName url");
             return;
         }
 
-        directory = resultItems.getRequest().getExtra("videoName").toString();
+        directory = resultItems.getRequest().getExtra("videoName").toString().replaceAll(" ","");
         Download download = null;
         for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
             if (entry.getValue() instanceof Iterable) {
