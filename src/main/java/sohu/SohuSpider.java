@@ -1,10 +1,8 @@
 package sohu;
 
-import tools.VideoPipeline;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
 
@@ -96,16 +94,5 @@ public class SohuSpider implements PageProcessor {
             result = json.jsonPath(".norVid").toString();
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-
-        Spider.create(new SohuSpider())
-                .addUrl("http://tv.sohu.com/item/MjE1Nzgx.html")
-//                .addUrl("http://tv.sohu.com/item/MTE5NzY3OA==.html")
-//                .addUrl("http://so.tv.sohu.com/list_p1101_p2_p3_u7f8e_u5267_p4-1_p5_p6_p73_p80_p91_p101_p11_p12_p130.html")
-//                .addPipeline(new ConsolePipeline())
-//                .addPipeline(new PutFiles("./target/videoList/"))
-                .addPipeline(new VideoPipeline("./target",true,"sohu")).run();
     }
 }

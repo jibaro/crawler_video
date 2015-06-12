@@ -1,5 +1,7 @@
 package tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -11,27 +13,29 @@ import java.util.Map;
 /**
  * Created by only. on 2015/3/3.
  */
-public class VideoPipeline extends FilePersistentBase implements Pipeline {
+public class DownloadVideo extends FilePersistentBase implements Pipeline {
     private String directory = null;
-    private boolean subsection = false;
-    private String platform;
 
     /**
-     * create a PutFiles with default path"/data/webmagic/"
+     * create a OutToFile with default path"/data/webmagic/"
      */
-    public VideoPipeline(boolean subsection,String platform) {
+    public DownloadVideo() {
         setPath("/data/video/");
-        this.subsection=subsection;
-        this.platform=platform;
+
     }
 
-    public VideoPipeline(String path,boolean subsection,String platform) {
+    public DownloadVideo(String path) {
         setPath(path);
-        this.subsection=subsection;
-        this.platform=platform;
     }
 
     public void process(ResultItems resultItems, Task task) {
+        Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
+        if (!resultItems.getRequest().toString().contains("videoName")) {
+            logger.info("jump not videoName url");
+            return;
+        }
+
         directory = resultItems.getRequest().getExtra("videoName").toString();
         Download download = null;
         for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
@@ -39,7 +43,7 @@ public class VideoPipeline extends FilePersistentBase implements Pipeline {
                 Iterable value = (Iterable) entry.getValue();
                 for (Object o : value) {
                     try {
-                        download = new Download((Request) o, getPath() + directory, entry.getKey(),subsection,platform);
+                        download = new Download((Request) o, getPath() + directory, entry.getKey());
                         download.start();
                         download.join();
                     } catch (InterruptedException e) {
@@ -48,7 +52,7 @@ public class VideoPipeline extends FilePersistentBase implements Pipeline {
                 }
             } else {
                 try {
-                    download = new Download((Request) entry.getValue(), getPath() + directory, entry.getKey(),subsection,platform);
+                    download = new Download((Request) entry.getValue(), getPath() + directory, entry.getKey());
                     download.start();
                     download.join();
                 } catch (InterruptedException e) {

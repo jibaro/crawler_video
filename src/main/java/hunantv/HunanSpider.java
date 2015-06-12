@@ -1,11 +1,8 @@
 package hunantv;
 
-import tools.VideoPipeline;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Json;
 
@@ -45,10 +42,4 @@ public class HunanSpider implements PageProcessor {
         return stie;
     }
 
-    public static void main(String[] args) {
-        Spider.create(new HunanSpider()).addUrl("http://www.hunantv.com/v/1/1/f/1123276.html")
-                .addPipeline(new ConsolePipeline())
-                .addPipeline(new VideoPipeline("./target",false,"hunantv"))
-                .run();
-    }
 }
