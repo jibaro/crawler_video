@@ -1,4 +1,4 @@
-package tools;
+package Download;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -11,6 +11,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tools.FileInfo;
 import us.codecraft.webmagic.Request;
 
 import java.io.File;
@@ -40,11 +41,9 @@ public class Download extends Thread {
         setHeader(request);
         setFileName(request);
     }
-
-
+    
     private void setHeader(Request request) {
         this.httpget.addHeader("Referer", request.getUrl().toString());
-//        this.httpget.addHeader("Range", "bytes=0-1545");
     }
 
     private double getFileSize(CloseableHttpResponse response) {
@@ -80,26 +79,26 @@ public class Download extends Thread {
                                 fileInfo.loading(entity.getContent(), new FileOutputStream(new File(downloadPath)), getFileSize(response), videoName);
 
                             } else {
-                                System.out.println("get connect length is -1");
+                               logger.info("get connect length is -1");
                             }
                         } else {
-                            System.out.println("jump is" + videoName);
+                           logger.info("jump is" + videoName);
                         }
                     } else {
-                        System.out.println("not response deta");
+                       logger.info("not response deta");
                     }
                 } else {
-                    System.out.println("page status code  is:" + response.getStatusLine().getStatusCode());
+                   logger.info("page status code  is:" + response.getStatusLine().getStatusCode());
                 }
             } finally {
                 response.close();
             }
         } catch (ClientProtocolException ex) {
             // Handle protocol errors
-            System.out.println(ex.toString());
+           logger.info(ex.toString());
         } catch (IOException ex) {
             // Handle I/O errors
-            System.out.println(ex.toString());
+           logger.info(ex.toString());
         }
     }
 }

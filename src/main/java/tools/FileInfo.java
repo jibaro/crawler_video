@@ -18,7 +18,7 @@ public class FileInfo {
      *
      * @param directory
      */
-    protected void checkSubsection(String directory) {
+    public void checkSubsection(String directory) {
         filePath = new File(directory);
         if (filePath.exists() == false) {
             filePath.mkdirs();
@@ -32,7 +32,7 @@ public class FileInfo {
      * @param fileSize
      * @return
      */
-    protected boolean checkFilesExists(String path, double fileSize) {
+    public boolean checkFilesExists(String path, double fileSize) {
         boolean result = true;
         try {
             if (new File(path).exists()) {
@@ -56,7 +56,7 @@ public class FileInfo {
      * @param fileSize
      * @param videoName
      */
-    protected void loading(InputStream in, OutputStream out, double fileSize, String videoName) {
+    public void loading(InputStream in, OutputStream out, double fileSize, String videoName) {
         byte[] buffer = new byte[1024];
         int readLength = 0;
         double downloadSize = 0;
@@ -66,7 +66,6 @@ public class FileInfo {
                 out.write(buffer, 0, readLength);
                 out.flush();
                 System.out.print('\r');
-//                logger.info(videoName + "\t" + String.format("%.2f", downloadSize / fileSize * 100) + "%");
                 System.out.print(videoName + "\t" + String.format("%.2f", downloadSize / fileSize * 100) + "%");//downloadSize / fileSize * 100
             }
             in.close();
@@ -77,29 +76,4 @@ public class FileInfo {
 
     }
 
-/*    protected void loading(InputStream in, OutputStream out, double fileSize, String videoName) {
-        byte[] buffer = new byte[1024];
-        int readLength = 0;
-        double downloadSize = 0;
-
-        BufferedInputStream bis = new BufferedInputStream(in);
-        BufferedOutputStream bos = new BufferedOutputStream(out);
-        int inByte;
-
-        try {
-            while ((inByte = bis.read(buffer,0,buffer.length)) != -1) {
-                downloadSize += readLength;
-                bos.write(buffer);
-                System.out.print('\r');
-                System.out.print(videoName + "\t" + String.format("%.2f", downloadSize/1024) + "kb");
-            }
-            bis.close();
-            bos.close();
-            in.close();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }*/
 }

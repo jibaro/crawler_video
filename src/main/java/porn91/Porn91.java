@@ -1,29 +1,24 @@
 package porn91;
 
+import HMA.hidemyass;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Created by yongqiang on 2015/2/1.
  */
 public class Porn91 implements PageProcessor {
-    public Logger log = Logger.getLogger(this.getClass().getName());
+    public Logger logger = Logger.getLogger(this.getClass().getName());
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000)
-            .addCookie("91porn.com", "91username", "sex462")
-            .addCookie("91porn.com", "DUID", "34bcWG7bidS6eN4v7aQoeN1czALcGNRq0brIWw5S%2B52562aE")
-            .addCookie("91porn.com", "EMAILVERIFIED", "no")
-            .addCookie("91porn.com", "USERNAME", "32984irY6nkvTf9L2QxEZSa5ApSJYyGEV91Qbe2DGq1t2e8")
-            .addCookie("91porn.com", "remainclosed", "1")
-            .addCookie("91porn.com", "user_level", "6")
-            .addCookie("91porn.com", "watch_times", "5")
-            .addCookie("91porn.com", "AJSTAT_ok_pages", "100")
-            .addCookie("91porn.com", "AJSTAT_ok_times", "1")
-            .addCookie("91porn.com", "CLIPSHARE", "1u96je6tu4ov3qomri77t8htt0");
+            .addCookie("91porn.com", "language", "cn_CN")
+            .addCookie("91porn.com", "watch_times", "0");
     String listUrl = "http://91porn\\.com/v\\.php\\w*";
     String videoUrl = "http://91porn\\.com/view_video\\.php\\w*";
     String downloadUrl="http://91porn\\.com/getfile\\.php\\w*";
@@ -37,7 +32,7 @@ public class Porn91 implements PageProcessor {
         }
         if(page.getUrl().regex(videoUrl).match()){
             String name=null;
-            String VID=null;
+            String VID="123";
             String seccode=null;
             String max_vid=null;
             String other="&mp4=1";
@@ -46,12 +41,11 @@ public class Porn91 implements PageProcessor {
             VID=currentHtml.regex("\\w*file\',\'(\\d*)\'").toString();
             seccode=currentHtml.regex("\\w*seccode\\',\\'(\\w*)\'").toString();
             max_vid=currentHtml.regex("\\w*max_vid\',\'(\\d*)\'").toString();
-            if(!VID.equals("")){
+            if(!VID.equals(null)){
                 String linnk="http://91porn.com/getfile.php?VID="+VID+"&seccode="+seccode+"&max_vid="+max_vid+other;
-//                page.putField(name, new Request(linnk).putExtra("videoName",name));
                 page.addTargetRequest(new Request(linnk).putExtra("videoName",name));
             } else {
-                log.info("没有获取到视频ID" + page.getUrl());
+                logger.warning("没有获取到视频ID" + page.getUrl());
             }
         }
         if (page.getUrl().regex(downloadUrl).match()){

@@ -1,4 +1,4 @@
-package tools;
+package Download;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +18,15 @@ import java.util.Map;
 /**
  * Created by only. on 2015/3/2.
  */
-public class OutToFile extends FilePersistentBase implements Pipeline {
+public class OutputUlr extends FilePersistentBase implements Pipeline {
     /**
-     * create a OutToFile with default path"/data/webmagic/"
+     * create a OutputUlr with default path"/data/webmagic/"
      */
-    public OutToFile() {
+    public OutputUlr() {
         setPath("/data/webmagic/");
     }
 
-    public OutToFile(String path) {
+    public OutputUlr(String path) {
         setPath(path);
     }
 
