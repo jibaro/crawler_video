@@ -25,8 +25,8 @@ public class RunSpider {
         if (args.length == 0) {
             video = Spider.create(RunSpider.getPlatform(info.getUserInfo().get(0)))
                     .addUrl(info.Urls().toArray(new String[info.Urls().size()]))
-                    .addPipeline(new OutputUlr(info.getFilePath()))
-                .addPipeline(new OutputVideo(info.getFilePath()));
+                    .addPipeline(new OutputUlr(info.getFilePath()));
+//                .addPipeline(new OutputVideo(info.getFilePath()));
             SpiderMonitor.instance().register(video);
             video.thread(5).run();
         } else {
